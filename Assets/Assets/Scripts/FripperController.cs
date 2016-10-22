@@ -23,17 +23,19 @@ public class FripperController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//左矢印キーを押した時左フリッパーを動かす
-		if (Input.GetKeyDown(KeyCode.LeftArrow) && tag == "LeftFripperTag") {
+		//左矢印キーを押した時左フリッパーを動かす //左タップした時を追加
+		if ((Input.GetKeyDown (KeyCode.LeftArrow) || TouchController.isLeftTouchBegin ()) && tag == "LeftFripperTag") {
 			SetAngle (this.flickAngle);
 		}
-		//右矢印キーを押した時右フリッパーを動かす
-		if (Input.GetKeyDown(KeyCode.RightArrow) && tag == "RightFripperTag") {
+		//右矢印キーを押した時右フリッパーを動かす　//右タップした時を追加
+		if ((Input.GetKeyDown (KeyCode.RightArrow) || TouchController.isRightTouchBegin ()) && tag == "RightFripperTag") {
 			SetAngle (this.flickAngle);
 		}
 
 		//矢印キー離された時フリッパーを元に戻す
-		if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)) {
+		if (Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.RightArrow) ||
+			(TouchController.isLeftTouchEnd () && tag == "LeftFripperTag") ||  //左タップが終わった時を追加
+			TouchController.isRightTouchEnd () && tag == "RightFripperTag") {  //右タップが終わった時を追加
 			SetAngle (this.defaultAngle);
 		}
 	}
